@@ -23,20 +23,7 @@ mulMatriz:
 	la $a0, m1 ## endereço base da matriz m1
 	la $a1, m2
 	##inicializa a matriz
-	S1:
-	   li $s1, 0
-	   S2:
-	      mul $t5, $s0, $t1 ## (i*n)
-	      addu $t5, $s1, $t5 ## (i*n) + j
-	      mul $t5, $t5, $t2 ## [(i*n) + j]*dbl_size
-	      addu $t6, $t4, $t5 ## x[i][j]
-	      la $t8, zero
-	      l.d $f2, ($t8)
-	      s.d $f2, ($t6) ## x[i][j] = 0
-	      addi $s1, $s1, 1
-	      blt $s1, $t1, S2 ## se j < n, repita o procedimento
-	   addi $s0, $s0, 1
-	   blt $s0, $t1, S1 ## se i < n, repita o procedimento
+	jal fillZero
 	li $s0, 0 # i = 0
 	li $s1, 0 # j = 0
 	li $s2, 0 # k = 0
@@ -71,7 +58,30 @@ mulMatriz:
 	   blt $s0, $t1, L1 ## se i < n
 	 jal impress ##imprime a matriz x
 	 j end ## finaliza o programa
-	     	
+	 
+fillZero:
+	##inicializa matriz x
+	addi $sp, $sp, -4
+	sw $ra, ($sp)
+	li $s0, 0
+	li $s1, 0
+	S1:
+	   li $s1, 0
+	   S2:
+	      mul $t5, $s0, $t1 ## (i*n)
+	      addu $t5, $s1, $t5 ## (i*n) + j
+	      mul $t5, $t5, $t2 ## [(i*n) +j]*dbl_size
+	      addu $t6, $t4, $t5 ## x[i][j]
+	      la $t8, zero
+	      l.d $f2, ($t8)
+	      s.d $f2, ($t6) ## x[i][j] = 0
+	      addi $s1, $s1, 1
+	      blt $s1, $t1, S2 ## se j < n, repita o procedimento
+	   addi $s0, $s0, 1
+	   blt $s0, $t1, S1 ## se i < n, repita o procedimento
+	lw $ra, ($sp)
+	addi $sp, $sp, 4
+	jr $ra	     	
 impress:
 	li $s0, 0
 	li $s1, 0
