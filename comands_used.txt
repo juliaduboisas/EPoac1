@@ -14,3 +14,4 @@ sw $ra, ($sp)
 syscall
 jr $ra
 move $t4, $v0
+mul.d $f2, $f2, $f4
