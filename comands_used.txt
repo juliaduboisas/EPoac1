@@ -1,0 +1,16 @@
+lw $t1, n
+blt $t1, 2, exception
+mul $t3, $t1, $t1
+jal alocation
+li $s0, 0
+la $a0, m1
+addu $t6, $a0, $t5
+l.d $f2, ($t6)
+add.d $f2, $f2, $f4
+s.d $f2, ($t6)
+addi $s0, $s0, 1
+j end
+sw $ra, ($sp)
+syscall
+jr $ra
+move $t4, $v0
