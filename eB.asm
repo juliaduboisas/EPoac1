@@ -36,7 +36,7 @@
 .text
 .globl main
 main:
-addMatriz:
+MulCMatriz:
 	lw $t1, n			## Carrega a dimensão n das matrizes
 	blt $t1, 2, exception 		## Se matriz inválida, não executa procedimento
 	lw $t2, dbl_size		## Carrega o tamanho do double
